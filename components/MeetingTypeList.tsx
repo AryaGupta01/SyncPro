@@ -11,6 +11,7 @@ import { Call, useStreamVideoClient } from '@stream-io/video-react-sdk'
 // import { motion } from "framer-motion"
 import { Textarea } from "@/components/ui/textarea"
 import ReactDatePicker from 'react-datepicker'
+import { Input } from './ui/input'
 
 
 const MeetingTypeList = () => {
@@ -79,7 +80,7 @@ const MeetingTypeList = () => {
                     />
                 </div>
 
-                <div className='h-full w-3/5  rounded-xl border-black'>
+                <div className='h-full w-3/5  rounded-xl border-black' onClick={() => { setMeetingState("isJoiningMeeting") }}>
                     <HomeCard
                         img="/icons/join-meeting.svg"
                         title="Joining Meeting"
@@ -98,12 +99,12 @@ const MeetingTypeList = () => {
                         img="/icons/schedule.svg"
                         title="Schedule Meeting"
                         description="Plan your meeting"
-                        handleClick={() => setMeetingState("isJoiningMeeting")}
+                        handleClick={() => setMeetingState("isScheduleMeeting")}
                         className="bg-gradient-to-r from-green-900 to-lime-500 "
                     />
                 </div>
 
-                <div className='h-full w-1/3  rounded-xl border-black'>
+                <div className='h-full w-1/3  rounded-xl border-black'onClick={() => { router.push("/recordings") }}>
                     <HomeCard
                         img="/icons/recordings.svg"
                         title="View Recordings"
@@ -168,6 +169,17 @@ const MeetingTypeList = () => {
                 handleClick={createMeeting}
 
             />
+            <MeetingModal
+                isOpen={meetingState === 'isJoiningMeeting'}
+                onClose={() => setMeetingState(undefined)}
+                title="Type link here"
+                className="text-center"
+                buttonText="Join Meeting"
+                handleClick={()=> router.push(values.link)}
+
+            >
+                <Input placeholder='Meeting Link' className='border-none bg-dark-1 focus-visible:ring-0 focus-visible:ring-offset-0' onChange={(e)=> setValues({...values, link:e.target.value})}></Input>
+            </MeetingModal>
 
         </section>
     )

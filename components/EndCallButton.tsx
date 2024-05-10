@@ -15,6 +15,7 @@ const EndCallButton = () => {
     return (
     <Button onClick={async ()=>{
         await call.endCall();
+        // await call.stopTranscription();
         router.push('/')
     }} className='bg-red-500'>
         End Session
