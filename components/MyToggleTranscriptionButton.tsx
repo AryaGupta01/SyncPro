@@ -1,15 +1,15 @@
 // import Image from 'next/image';
+import { Bold } from "lucide-react"
+ 
+import { Toggle } from "@/components/ui/toggle"
 
 const MyToggleTranscriptionButton = () => {
   return (
-    <div className="flex-center h-screen w-full">
-      <Image
-        src="/icons/loading-circle.svg"
-        alt="Loading..."
-        width={50}
-        height={50}
-      />
-    </div>
+    // <div>
+    <Toggle aria-label="Toggle bold">
+      <Bold className="h-4 w-4" />
+    </Toggle>
+    // {/* </div> */}
   );
 };
 
