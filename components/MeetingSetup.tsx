@@ -9,9 +9,10 @@ import {
 } from '@stream-io/video-react-sdk';
 import React, { useEffect, useState } from 'react';
 import { Button } from './ui/button';
+import MyToggleTranscriptionButton from './MyToggleTranscriptionButton';
 
 // Import MyToggleTranscriptionButton component
-import { MyToggleTranscriptionButton } from './MyToggleTranscriptionButton';
+// import { MyToggleTranscriptionButton } from './MyToggleTranscriptionButton';
 
 const MeetingSetup = ({ setIsSetupComplete }: { setIsSetupComplete: (value: boolean) => void }) => {
   const call = useCall();
