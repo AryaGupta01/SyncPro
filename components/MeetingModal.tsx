@@ -21,7 +21,46 @@ interface MeetingModalProps {
     buttonIcon?: string;
 }
 const MeetingModal = ({ isOpen, onClose, title, className, children, handleClick, buttonText, image, buttonIcon }: MeetingModalProps) => {
+    // navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
+    //     console.log({ stream })
+    //     if (!MediaRecorder.isTypeSupported('audio/webm'))
+    //       return alert('Browser not supported')
+    //     const mediaRecorder = new MediaRecorder(stream, {
+    //       mimeType: 'audio/webm',
+    //     })
+    //     const socket = new WebSocket('wss://api.deepgram.com/v1/listen', [
+    //       'token',
+    //       'f82c3e1dda746194de18c9703dd70e83c0685c58',
+    //     ])
+    //     socket.onopen = () => {
+    //     //   document.querySelector('#status').textContent = 'Connected'
+    //       console.log({ event: 'onopen' })
+    //       mediaRecorder.addEventListener('dataavailable', async (event) => {
+    //         if (event.data.size > 0 && socket.readyState == 1) {
+    //           socket.send(event.data)
+    //         }
+    //       })
+    //       mediaRecorder.start(1000)
+    //     }
+
+    //     socket.onmessage = (message) => {
+    //       const received = JSON.parse(message.data)
+    //       const transcript = received.channel.alternatives[0].transcript
+    //       if (transcript && received.is_final) {
+    //         console.log(transcript)
+    //       }
+    //     }
+
+    //     socket.onclose = () => {
+    //       console.log({ event: 'onclose' })
+    //     }
+
+    //     socket.onerror = (error) => {
+    //       console.log({ event: 'onerror', error })
+    //     }
+    //   })
     return (
+        
         <Dialog open={isOpen} onOpenChange={onClose}>
             <DialogContent className='flex w-full max-w-[520px] flex-col gap-6 border-none bg-dark-1 px-6 py-9 text-white'>
                 <div className='flex flex-col gap-6'>

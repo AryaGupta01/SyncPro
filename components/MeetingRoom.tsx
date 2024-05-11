@@ -13,6 +13,8 @@ import {
 import { LayoutList, Loader, Users } from 'lucide-react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import EndCallButton from './EndCallButton'
+import YourComponent from './YourComponent'
+import { MyToggleTranscriptionButton } from './ToggleTranscriptionButton'
 
 type CallLayoutType = 'grid' | 'speaker-left' | 'speaker-right'
 const MeetingRoom = () => {
@@ -49,6 +51,9 @@ const MeetingRoom = () => {
       </div>
       <div className='fixed bottom-10 flex w-full items-center justify-center gap-3.5 flex-wrap'>
         <CallControls onLeave={()=>router.push('/')} />
+        {/* <YourComponent/> */}
+        {/* <MyToggleTranscriptionButton /> */}
+
 
         <DropdownMenu>
           <div className='flex items-center'>
