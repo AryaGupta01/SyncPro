@@ -51,7 +51,7 @@ const MeetingRoom = () => {
       </div>
       <div className='fixed bottom-10 flex w-full items-center justify-center gap-3.5 flex-wrap'>
         <CallControls onLeave={()=>router.push('/')} />
-        {/* <YourComponent/> */}
+        <YourComponent/>
         {/* <MyToggleTranscriptionButton /> */}
 
 

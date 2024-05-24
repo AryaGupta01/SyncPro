@@ -3,7 +3,7 @@ from speechmatics.batch_client import BatchClient
 from httpx import HTTPStatusError
 
 API_KEY = "Kren4kt5GXMPlTMnobOwa8XG2D1acMPk"
-PATH_TO_FILE = "EarningsCall.wav"
+PATH_TO_FILE = "app/(root)/(home)/summary/api/EarningsCall.wav"
 LANGUAGE = "en"
 
 settings = ConnectionSettings(
