@@ -56,6 +56,7 @@ const Sidebar = () => {
               <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
               <span className="sr-only">Toggle theme</span>
             </Button>
+            
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuItem onClick={() => setTheme("light")}>
@@ -70,7 +71,7 @@ const Sidebar = () => {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className='w-full h-14 text-2xl mb-10 pl-4 gap-2 flex items-center active:bg-blue-1 justify-start rounded-xl'><Image
+      <div className='w-full h-14 text-2xl mb-10 mt-10 pl-4 gap-2 flex items-center active:bg-blue-1 justify-start rounded-xl'><Image
         src="/icons/setting.svg"
         alt="feature"
         width={30}

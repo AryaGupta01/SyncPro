@@ -7,8 +7,8 @@ import TranscriptionForm from "@/components/TranscriptionForm";
 export default function Summary() {
   return (
     <div>
-      <h1>Speech Transcription</h1>
-      <TranscriptionForm />
+      <center><h1>Launch Soon</h1></center>
+      {/* <TranscriptionForm /> */}
     </div>
   );
 }
