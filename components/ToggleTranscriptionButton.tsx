@@ -6,12 +6,13 @@ export const MyToggleTranscriptionButton: React.FC = () => {
   const { useCallSettings, useIsCallTranscribingInProgress } = useCallStateHooks();
 
   const { transcription } = useCallSettings() || {};
+  const isTranscribing = useIsCallTranscribingInProgress(); // Always call hooks at the top level
+
+  // Early return if transcription is disabled
   if (transcription?.mode === TranscriptionSettingsModeEnum.DISABLED) {
-    // Transcriptions are not available, render nothing
     return null;
   }
 
-  const isTranscribing = useIsCallTranscribingInProgress();
   return (
     <button
       onClick={() => {

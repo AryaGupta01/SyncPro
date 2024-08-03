@@ -44,12 +44,12 @@ const CallList = ({ type }: { type: 'ended' | 'upcoming' | 'recordings' }) => {
                 const recordings = callData.filter(call => call.recordings.length > 0).flatMap(call => call.recordings)
                 setRecordings(recordings);
             } catch (error) {
-                toast({title:'Try again ater'})
+                toast({ title: 'Try again later' })
             }
-
         }
         if (type === 'recordings') fetchRecordings();
-    }, [type, callRecordings]);
+    }, [type, callRecordings, toast]);
+    
     const calls = getCalls();
     const noCallsMessage = getNoCallsMessage();
     if (isLoading) return <Loader />
