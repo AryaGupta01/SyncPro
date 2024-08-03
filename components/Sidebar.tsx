@@ -51,14 +51,16 @@ const Sidebar = () => {
         })}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="icon">
+            <Button variant="outline" className="flex items-center gap-2">
               <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-              <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+              <Moon className="h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
               <span className="sr-only">Toggle theme</span>
+              <span>Theme</span> {/* Added text */}
             </Button>
             
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
+          <DropdownMenuContent align="end" className="bg-blue-1"
+          style={{ width: 'fit-content', minWidth: '100%' }}>
             <DropdownMenuItem onClick={() => setTheme("light")}>
               Light
             </DropdownMenuItem>
