@@ -9,10 +9,10 @@ import {
 } from '@stream-io/video-react-sdk';
 import React, { useEffect, useState } from 'react';
 import { Button } from './ui/button';
-import MyToggleTranscriptionButton from './MyToggleTranscriptionButton';
+// import MyToggleTranscriptionButton from './MyToggleTranscriptionButton';
 
 // Import MyToggleTranscriptionButton component
-// import { MyToggleTranscriptionButton } from './MyToggleTranscriptionButton';
+import { MyToggleTranscriptionButton } from './MyToggleTranscriptionButton';
 
 const MeetingSetup = ({ setIsSetupComplete }: { setIsSetupComplete: (value: boolean) => void }) => {
   const call = useCall();
@@ -51,10 +51,10 @@ const MeetingSetup = ({ setIsSetupComplete }: { setIsSetupComplete: (value: bool
       {/* Include MyToggleTranscriptionButton component */}
       <MyToggleTranscriptionButton />
       <Button
-        className='rounded-md bg-green-500 px-4 py-2.5'
+        className='rounded-md bg-green-500 px-4 py-2.5 border-2'
         onClick={async () => {
           call.join();
-          // await call.startTranscription();
+          await call.startTranscription();
           setIsSetupComplete(true);
         }}
       >
