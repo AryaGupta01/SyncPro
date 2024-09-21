@@ -1,18 +1,21 @@
 //@ts-nocheck
 'use client'
 import { useGetCalls } from '@/hooks/useGetCalls'
-import { Call, CallRecording, CallRecordingFailedEvent } from '@stream-io/video-react-sdk';
+import { Call, CallRecording } from '@stream-io/video-react-sdk';
 import React, { useEffect, useState } from 'react'
 import MeetingCard from './MeetingCard';
 import { Loader } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useToast } from './ui/use-toast';
+import { useLink } from '@/components/LinkContext'; // Import useLink
 
 const CallList = ({ type }: { type: 'ended' | 'upcoming' | 'recordings' }) => {
     const { endedCalls, upcomingCalls, callRecordings, isLoading } = useGetCalls();
     const router = useRouter();
-    const [recordings, setRecordings] = useState<CallRecording[]>([])
-    const {toast} = useToast();
+    const [recordings, setRecordings] = useState<CallRecording[]>([]);
+    const { toast } = useToast();
+    const { setLink } = useLink(); // Destructure setLink from useLink
+
     const getCalls = () => {
         switch (type) {
             case 'ended':
@@ -25,6 +28,7 @@ const CallList = ({ type }: { type: 'ended' | 'upcoming' | 'recordings' }) => {
                 return [];
         }
     }
+
     const getNoCallsMessage = () => {
         switch (type) {
             case 'ended':
@@ -37,22 +41,25 @@ const CallList = ({ type }: { type: 'ended' | 'upcoming' | 'recordings' }) => {
                 return '';
         }
     }
+
     useEffect(() => {
         const fetchRecordings = async () => {
             try {
-                const callData = await Promise.all(callRecordings.map((meeting) => meeting.queryRecordings()))
-                const recordings = callData.filter(call => call.recordings.length > 0).flatMap(call => call.recordings)
+                const callData = await Promise.all(callRecordings.map((meeting) => meeting.queryRecordings()));
+                const recordings = callData.filter(call => call.recordings.length > 0).flatMap(call => call.recordings);
                 setRecordings(recordings);
             } catch (error) {
-                toast({ title: 'Try again later' })
+                toast({ title: 'Try again later' });
             }
         }
+        fetchRecordings();
         if (type === 'recordings') fetchRecordings();
     }, [type, callRecordings, toast]);
-    
+
     const calls = getCalls();
     const noCallsMessage = getNoCallsMessage();
     if (isLoading) return <Loader />
+
     return (
         <div className='grid grid-cols-1 gap-5 xl:grid-cols-2'>
             {calls && calls.length > 0 ? calls.map((meeting: Call | CallRecording) => (
@@ -71,16 +78,24 @@ const CallList = ({ type }: { type: 'ended' | 'upcoming' | 'recordings' }) => {
                     date={meeting.state?.startsAt.toLocaleString() || meeting.start_time.toLocaleString()}
                     isPreviousMeeting={type === 'ended'}
                     buttonIcon1={type === 'recordings' ? '/icons/play.svg' : undefined}
-                    handleClick={type === 'recordings' ? () => router.push(`${meeting.url}`) : () => router.push(`/meeting/${meeting.id}`)}
+                    handleClick={type === 'recordings' 
+                        ? () => {
+                            setLink(meeting.url); // Set the link in the context
+                            router.push(`${meeting.url}`);
+                          } 
+                        : () => {
+                            setLink(`${process.env.NEXT_PUBLIC_BASE_URL}/meeting/${meeting.id}`); // Set the link in the context
+                            router.push(`/meeting/${meeting.id}`);
+                          }
+                    }
                     buttonText={type === 'recordings' ? 'Play' : 'Start'}
                     link={type === 'recordings' ? meeting.url : `${process.env.NEXT_PUBLIC_BASE_URL}/meeting/${meeting.id}`}
                 />
             )) : (
                 <h1>{noCallsMessage}</h1>
-
             )}
         </div>
     )
 }
 
-export default CallList
+export default CallList;

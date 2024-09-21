@@ -6,6 +6,7 @@ import '@stream-io/video-react-sdk/dist/css/styles.css';
 import 'react-datepicker/dist/react-datepicker.css'
 import { Toaster } from "@/components/ui/toaster"
 import { ThemeProvider } from "@/components/theme-provider";
+import { LinkProvider } from "@/components/LinkContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,6 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+    <LinkProvider>
       <ClerkProvider
         appearance={{
           layout: {
@@ -53,7 +55,7 @@ export default function RootLayout({
           
         </body>
       </ClerkProvider>
-
+    </LinkProvider>
     </html>
   );
 }

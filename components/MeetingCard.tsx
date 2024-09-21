@@ -6,6 +6,9 @@ import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
 import { avatarImages } from "@/constants";
 import { useToast } from "./ui/use-toast";
+import Summary from "./SummaryModal";
+import SummaryModal from "./SummaryModal";
+import { useLink } from "./LinkContext";
 
 interface MeetingCardProps {
     title: string;
@@ -28,6 +31,7 @@ const MeetingCard = ({
     link,
     buttonText,
 }: MeetingCardProps) => {
+    const { setLink } = useLink();
     const { toast } = useToast();
 
     return (
@@ -72,6 +76,7 @@ const MeetingCard = ({
                                 toast({
                                     title: "Link Copied",
                                 });
+                                setLink(link);
                             }}
                             className="bg-dark-4 px-6"
                         >
@@ -83,6 +88,7 @@ const MeetingCard = ({
                             />
                             &nbsp; Copy Link
                         </Button>
+                        {/* <SummaryModal link= {link}/> */}
                     </div>
                 )}
             </article>
