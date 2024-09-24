@@ -1,15 +1,15 @@
 "use client";
 
 import Image from "next/image";
-
-import { cn } from "@/lib/utils";
+import {cn} from "@/lib/utils";
 import { Button } from "./ui/button";
 import { avatarImages } from "@/constants";
 import { useToast } from "./ui/use-toast";
 import Summary from "./SummaryModal";
 import SummaryModal from "./SummaryModal";
 import { useLink } from "./LinkContext";
-
+import { useState } from "react";
+import { convertMP4toMP3 } from "@/lib/convertmp3ToMp4";
 interface MeetingCardProps {
     title: string;
     date: string;
@@ -33,66 +33,87 @@ const MeetingCard = ({
 }: MeetingCardProps) => {
     const { setLink } = useLink();
     const { toast } = useToast();
+    console.log(link);
+    const [audioURL, setAudioURL] = useState<null | string | any>(null);
 
-    return (
-        <section className="flex min-h-[258px] w-full flex-col justify-between rounded-[14px] bg-dark-1 px-5 py-8 xl:max-w-[568px]">
-            <article className="flex flex-col gap-5">
-                <Image src={icon} alt="upcoming" width={28} height={28} />
-                <div className="flex justify-between">
-                    <div className="flex flex-col gap-2">
-                        <h1 className="text-2xl font-bold">{title}</h1>
-                        <p className="text-base font-normal">{date}</p>
-                    </div>
+    const [isConverting, setIsConverting] = useState(false);
+
+  const [mp4Url, setMp4Url] = useState('');
+  const [mp3Url, setMp3Url] = useState('');
+
+  const handleConvert = async () => {
+    try {
+      const resultMp3Url = await convertMP4toMP3(mp4Url);
+      setMp3Url(resultMp3Url);
+      console.log(mp3Url)
+    } catch (error) {
+      console.error('Conversion failed', error);
+    }
+  };
+return (
+    <section className="flex min-h-[258px] w-full flex-col justify-between rounded-[14px] bg-dark-1 px-5 py-8 xl:max-w-[568px]">
+        <article className="flex flex-col gap-5">
+            <Image src={icon} alt="upcoming" width={28} height={28} />
+            <div className="flex justify-between">
+                <div className="flex flex-col gap-2">
+                    <h1 className="text-2xl font-bold">{title}</h1>
+                    <p className="text-base font-normal">{date}</p>
                 </div>
-            </article>
-            <article className={cn("flex justify-center relative", {})}>
-                <div className="relative flex w-full max-sm:hidden">
-                    {avatarImages.map((img, index) => (
+            </div>
+        </article>
+        <article className={cn("flex justify-center relative", {})}>
+            <div className="relative flex w-full max-sm:hidden">
+                {avatarImages.map((img, index) => (
+                    <Image
+                        key={index}
+                        src={img}
+                        alt="attendees"
+                        width={40}
+                        height={40}
+                        className={cn("rounded-full", { absolute: index > 0 })}
+                        style={{ top: 0, left: index * 28 }}
+                    />
+                ))}
+                <div className="flex-center absolute left-[136px] size-10 rounded-full border-[5px] border-dark-3 bg-dark-4">
+                    +5
+                </div>
+            </div>
+            {!isPreviousMeeting && (
+                <div className="flex gap-2">
+                    <Button
+                        onClick={handleConvert}
+                        className="bg-blue-500">
+                        Summary
+                    </Button>
+                    <Button onClick={handleClick} className="rounded bg-blue-1 px-6">
+                        {buttonIcon1 && (
+                            <Image src={buttonIcon1} alt="feature" width={20} height={20} />
+                        )}
+                        &nbsp; {buttonText}
+                    </Button>
+                    <Button
+                        onClick={() => {
+                            navigator.clipboard.writeText(link);
+                            toast({
+                                title: "Link Copied",
+                            });
+                            setLink(link);
+                        }}
+                        className="bg-dark-4 px-6"
+                    >
                         <Image
-                            key={index}
-                            src={img}
-                            alt="attendees"
-                            width={40}
-                            height={40}
-                            className={cn("rounded-full", { absolute: index > 0 })}
-                            style={{ top: 0, left: index * 28 }}
+                            src="/icons/copy.svg"
+                            alt="feature"
+                            width={20}
+                            height={20}
                         />
-                    ))}
-                    <div className="flex-center absolute left-[136px] size-10 rounded-full border-[5px] border-dark-3 bg-dark-4">
-                        +5
-                    </div>
+                        &nbsp; Copy Link
+                    </Button>
+                    {/* <SummaryModal link= {link}/> */}
                 </div>
-                {!isPreviousMeeting && (
-                    <div className="flex gap-2">
-                        <Button onClick={handleClick} className="rounded bg-blue-1 px-6">
-                            {buttonIcon1 && (
-                                <Image src={buttonIcon1} alt="feature" width={20} height={20} />
-                            )}
-                            &nbsp; {buttonText}
-                        </Button>
-                        <Button
-                            onClick={() => {
-                                navigator.clipboard.writeText(link);
-                                toast({
-                                    title: "Link Copied",
-                                });
-                                setLink(link);
-                            }}
-                            className="bg-dark-4 px-6"
-                        >
-                            <Image
-                                src="/icons/copy.svg"
-                                alt="feature"
-                                width={20}
-                                height={20}
-                            />
-                            &nbsp; Copy Link
-                        </Button>
-                        {/* <SummaryModal link= {link}/> */}
-                    </div>
-                )}
-            </article>
-        </section>
-    );
+            )}
+        </article>
+    </section>
+);
 };
 export default MeetingCard

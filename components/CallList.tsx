@@ -48,7 +48,6 @@ const CallList = ({ type }: { type: 'ended' | 'upcoming' | 'recordings' }) => {
                 const callData = await Promise.all(callRecordings.map((meeting) => meeting.queryRecordings()));
                 const recordings = callData.filter(call => call.recordings.length > 0).flatMap(call => call.recordings);
                 setRecordings(recordings);
-                console.log(recordings);
             } catch (error) {
                 toast({ title: 'Try again later' });
             }
