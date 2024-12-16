@@ -7,6 +7,7 @@ export const useGetCalls=()=>{
     const [isLoading,setIsLoading]=useState(false);
     const client = useStreamVideoClient();
     const{user}=useUser();
+    // Fetch calls when the user or client changes
     useEffect(()=>{
         const loadCalls=async()=>{
             if(!client||!user?.id) return;
