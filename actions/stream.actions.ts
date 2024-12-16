@@ -5,7 +5,7 @@ import { StreamClient } from "@stream-io/node-sdk";
 
 const apiKey= process.env.NEXT_PUBLIC_STREAM_API_KEY;
 const apiSecret = process.env.STREAM_SECRET_KEY;
-
+// Create a token provider function
 export const tokenProvider = async () => {
     const user = await currentUser();
 
@@ -16,7 +16,7 @@ export const tokenProvider = async () => {
     const client = new StreamClient(apiKey,apiSecret)
     const exp = Math.round(new Date().getTime()/1000)+ 60*60;
     const issued =Math.floor(Date.now()/1000)-60;
-
+// Create a token with the user ID, expiration time, and issued time
     const token = client.createToken(user.id,exp,issued)
     return token;
 }
