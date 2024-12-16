@@ -1,3 +1,4 @@
+// import config file
 import type { Config } from "tailwindcss"
 
 const config = {
